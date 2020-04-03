@@ -235,6 +235,7 @@ export default class ContentWrap extends Component {
 				cssMode,
 				this.props.currentItem.cssSettings
 			);
+			// console.log('hey there', currentCode.js)
 			var jsPromise = computeJs(
 				currentCode.js,
 				this.props.currentItem.jsMode,

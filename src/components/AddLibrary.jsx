@@ -2,6 +2,7 @@ import { h, Component } from 'preact';
 import { jsLibs, cssLibs } from '../libraryList';
 import { trackEvent } from '../analytics';
 import { LibraryAutoSuggest } from './LibraryAutoSuggest';
+import path from 'path';
 
 export default class AddLibrary extends Component {
 	constructor(props) {
@@ -45,6 +46,8 @@ export default class AddLibrary extends Component {
 			});
 		}
 
+		console.log('your js', this.state.js);
+
 		// trackEvent('ui', 'addLibrarySelect', target.selectedOptions[0].label);
 		this.props.onChange({ js: this.state.js, css: this.state.css });
 	}
@@ -57,6 +60,7 @@ export default class AddLibrary extends Component {
 		this.textareaBlurHandler(null, textarea);
 	}
 	render() {
+		const USE_LOCAL = true;
 		return (
 			<div>
 				<h1>Add Library</h1>
@@ -90,14 +94,24 @@ export default class AddLibrary extends Component {
 						<option value="">-------</option>
 						<optgroup label="JavaScript Libraries">
 							{jsLibs.map(lib => (
-								<option data-type={lib.type} value={lib.url}>
+								<option
+									data-type={lib.type}
+									value={
+										USE_LOCAL ? `./lib/ext/${path.basename(lib.url)}` : lib.url
+									}
+								>
 									{lib.label}
 								</option>
 							))}
 						</optgroup>
 						<optgroup label="CSS Libraries">
 							{cssLibs.map(lib => (
-								<option data-type={lib.type} value={lib.url}>
+								<option
+									data-type={lib.type}
+									value={
+										USE_LOCAL ? `./lib/ext/${path.basename(lib.url)}` : lib.url
+									}
+								>
 									{lib.label}
 								</option>
 							))}
